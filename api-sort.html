@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sorting</title>
+</head>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<body>
+    <style>
+        .section {
+        width: 50%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+      }
+      select {
+        width: 350px;
+        padding: 10px;
+      }
+      .card {
+        padding: 20px;
+        border: 1px solid;
+      }
+      .card img {
+        display: inline-block;
+        max-width: 300px;
+        width: 230px;
+        /* aspect-ratio: 1; */
+      }
+      .container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+      }
+    </style>
+
+    <div class="section">
+        <select name="select" id="filter">
+            <option value="">Sort</option>
+            <option value="Clothes">Clothes</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Shoes">Shoes</option>
+            <option value="Electronics">Electronics</option>
+        </select>
+        <select name="select" id="price">
+            <option value="">Sort</option>
+            <option value="Relevence">Relevence</option>
+            <option value="lth">LTH</option>
+            <option value="htl">HTL</option>
+        </select>
+    </div>
+    <div class="container"></div>
+
+    <script>
+        let arr = [];
+        async function getapi() {
+            try {
+                let res = await axios.get("https://api.escuelajs.co/api/v1/products");
+                arr = res.data;
+                showdata(arr);
+                // console.log(arr);
+            } catch (error) {
+                  console.log(error);
+            }
+        }
+        getapi();
+
+        function showdata(data) {
+            let container = document.querySelector(".container");
+            container.innerHTML = '';
+            data.map((item) => {
+                let div = document.createElement("div");
+                div.classList.add("card");
+                let title = document.createElement('p')
+                title.innerText = item.title
+                let desc = document.createElement('p')
+                desc.innerText = item.description
+                let price = document.createElement('p')
+                price.innerText = item.price
+                let category = item.category
+                let categoryImg = document.createElement('img');
+                categoryImg.src = item.category.image;
+                let categoryName = document.createElement('h3')
+                categoryName.innerText = item.category.name
+                let categoryId = document.createElement('p')
+                categoryId.innerText = item.category.id
+                div.append(title, desc, price, categoryId, categoryImg, categoryName)
+                container.append(div);
+            });
+        }
+
+        // let filterdata = document.querySelector('#filter')      
+        
+        // let newfiltervalue ;
+        // filterdata.addEventListener('change', filterfuns)
+        // function filterfuns(){
+        // let filtervalue =  document.querySelector('#filter').value      
+
+        // console.log(filtervalue);
+        //     if(filtervalue === ''){                
+        //         showdata(arr);
+        //     }
+        //     else{
+        //      newfiltervalue = arr.filter(item=> item.category.name == filtervalue)
+        //          showdata(newfiltervalue);                  
+        //     }
+        // }
+
+        
+        let filter = document.querySelector('#filter');
+        filter.addEventListener('change', filterdata)
+        
+        function filterdata() {
+            let newfiltervalue;
+            let filterValue = filter.value
+            if (filterValue === "") showdata(arr);            
+            else{ newfiltervalue = arr.filter(item => item.category.name == filterValue);
+            showdata(newfiltervalue);
+            }
+        }
+
+    let sortdata = document.querySelector('#price');
+    sortdata.addEventListener('change' ,sortfun);
+        let newsortvalue;
+    function sortfun(){
+        let sortvalue = sortdata.value;
+        console.log(sortvalue);
+        if(sortvalue == ''){
+            showdata(arr.slice(0))
+        }
+        else if(sortvalue == 'lth'){
+            newsortvalue =  arr.slice(0).sort((a,b)=> a.price- b.price)
+            showdata(newsortvalue)
+
+        }
+        else if(sortvalue == 'htl'){
+            newsortvalue =  arr.slice(0).sort((a,b)=> b.price- a.price)
+            showdata(newsortvalue)
+
+        }
+    }
+
+
+        // let sortdata = document.querySelector('#price')      
+        // let sortvalue;
+        // sortdata.addEventListener('change', sortfun)
+        // function sortfun(){
+        // sortvalue = sortdata.value
+        // console.log(sortvalue);
+        //     if(sortvalue == ''){                
+        //         showdata(arr);
+        //     }
+        //     else if(sortvalue == 'lth'){
+        //      newsortvalue =    arr.slice(0).sort((a,b)=>  a.price - b.price)
+        //         showdata(newsortvalue);                 
+        //     }
+        //     else if(sortvalue == 'htl'){
+        //      newsortvalue =   arr.slice(0).sort((a,b)=>  b.price - a.price)
+        //         showdata(newsortvalue);                 
+        //     }         
+        // }
+
+
+
+        // function filterfuns() {
+        //     // let newfiltervalue;
+        //     let filtervalue = document.querySelector("#filter").value;
+
+        //     console.log(filtervalue);
+        //     if (filtervalue === "") {
+        //         showdata(arr);
+        //     } else {
+        //         newfiltervalue = arr.filter((e) => {
+        //             return e.category.name == filtervalue;
+        //         });
+        //         console.log(newfiltervalue);
+        //         showdata(newfiltervalue);
+        //     }
+        // }
+
+
+      
+         
+           
+            
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //   let filterdata = document.querySelector('#filter')
+        //   filterdata.addEventListener('change', filter)
+
+        //   // let newfiltervalue = "" ;
+        //   function  filter(){
+        //     let filtervalue = filterdata.value;
+        //     if(filtervalue === ""){
+        //       showdata(arr)
+        //     }
+        //     else{
+        //       newfiltervalue = arr.filter(item=> item.category === filtervalue)
+        //       showdata(newfiltervalue);
+        //     }
+        //   }
+
+
+        //   let sortdata = document.querySelector('#price')
+        //   sortdata.addEventListener('change', sort)
+
+        //   // let newfiltervalue = "" ;
+        //   function  sort(){
+        //     let newsort = [...arr]
+        //     let sortvalue = sortdata.value;
+        //     if(sortvalue === ''){
+        //       //  let newsort = arr.sort((a,b)=> b.price-a.price)
+        //        showdata(newsort)
+        //     }
+        //     if(sortvalue === 'htl'){
+        //         newsort.sort((a,b)=> a.price-b.price)
+        //         showdata(newsort)
+        //     }
+        //     else if(sortvalue === 'lth'){
+        //        newsort.sort((a,b)=> b.price-a.price)
+        //         showdata(newsort)
+        //     }
+        //     else{
+        //       showdata(newsort)
+        //     }
+        //   }
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sorting-localstorage</title>
+</head>
+<link rel="stylesheet" href="sorting.css">
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css"
+    integrity="sha512-OQDNdI5rpnZ0BRhhJc+btbbtnxaj+LdQFeh0V9/igiEPDiWE2fG+ZsXl0JEH+bjXKPJ3zcXqNyP4/F/NegVdZg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<body>
+    <style>
+
+
+    </style>
+    <header class="header flex f-ai">
+        <div class="header-logo">
+            <img src="/images/med-logo.png" alt="">
+            <!-- <h1 class="flex">Doc-<span>Q</span></h1> -->
+            <h1 class="flex" style="background: yellow;height:70px; padding: 20px; margin-top: 15px;">Flipcart</h1>
+
+        </div>
+        <div class="navbar">
+            <ul class="flex f-sb">
+                <li>
+                    <a href="sort-method.html"> <span>Home</span> </a>
+                </li>
+                <li>
+                    <a href="#">Our Services</a>
+                </li>
+                <li>
+                    <a href="#">Find Doctor</a>
+                </li>
+                <li>
+                    <a href="#">Login/Register</a>
+                </li>
+            </ul>
+        </div>
+
+        <a href="cart-page.html" id="CartItems"> CartItems </a>
+
+    </header>
+    <div class="container" style="margin-top: 100px;">
+
+    </div>
+
+    <script>
+
+        let cart = JSON.parse(localStorage.getItem('shopdata')) || []
+        function showdata(data) {
+            let container = document.querySelector(".container");
+            container.innerHTML = '';
+            data.map((item, i) => {
+
+                let div = document.createElement("div");
+                div.classList.add("card");
+                let title = document.createElement("h4");
+                title.innerHTML = item.title;
+                let price = document.createElement("h5");
+                price.innerHTML = item.price;
+                let desc = document.createElement("h6");
+                title.innerHTML = item.desription;
+                let image = document.createElement("img");
+                image.src = item.image;
+                title.innerHTML = item.title;
+                let category = document.createElement("h3");
+                category.innerHTML = item.category;
+                // let btn = document.createElement('button');
+                // btn.id = 'btn'
+                let btn2 = document.createElement('button');
+                btn2.id = 'remove'
+                btn2.innerText = 'Delete'
+                btn2.addEventListener('click', () => Remove(i))
+                // console.log(i);
+                div.append(image, price, category, title, desc, btn2);
+                container.append(div);
+                let craritem = document.querySelector('#CartItems')
+                craritem.innerText = `CartItems : ${cart.length}`;
+            });
+        }
+        showdata(cart)
+
+        function Remove(i) {
+            cart.splice(i, 1)
+            localStorage.setItem('shopdata', JSON.stringify(cart));
+            showdata(cart)
+            let craritem = document.querySelector('#CartItems')
+            craritem.innerText = `CartItems : ${cart.length}`;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

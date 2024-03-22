@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sorting</title>
+</head>
+<link rel="stylesheet" href="sorting.css">
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css"
+  integrity="sha512-OQDNdI5rpnZ0BRhhJc+btbbtnxaj+LdQFeh0V9/igiEPDiWE2fG+ZsXl0JEH+bjXKPJ3zcXqNyP4/F/NegVdZg=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<body>
+  <header class="header flex f-ai">
+    <div class="header-logo">
+      <img src="/images/med-logo.png" alt="">
+      <!-- <h1 class="flex">Doc-<span>Q</span></h1> -->
+      <h1 class="flex" style="background: yellow;height:70px; padding: 20px; margin-top: 15px;">Flipcart</h1>
+
+    </div>
+    <div class="navbar">
+      <ul class="flex f-sb">
+        <li>
+          <a href="#"> <span>Home</span> </a>
+        </li>
+        <li>
+          <a href="#">Our Services</a>
+        </li>
+        <li>
+          <a href="#">Find Doctor</a>
+        </li>
+        <li>
+          <a href="#">Login/Register</a>
+        </li>
+      </ul>
+    </div>
+    <div class="searchbar">
+      <input type="text" placeholder="Search" id="search">
+    </div>
+    <a id="burgericon2" href="javascript:alert('clicked')">
+      <div></div>
+    </a>
+    <a href="getfromlocalstarage.html" style="position: relative;"> <i class="ri-shopping-cart-line"
+        style="font-size: 35px;"></i> <span id="cartspan"
+        style="position: absolute; right: 12px; top: -5px; font-size: 12px;"></span> </a>
+    <style>
+
+    </style>
+
+
+  </header>
+
+
+  <div class="sections" style="margin-top: 100px;">
+    <select name="select" id="filter" style="margin-bottom: 25px; display: flex; align-items: center;">
+      <option value="">Filter</option>
+      <option value="men's clothing">Men</option>
+      <option value="women's clothing">Women</option>
+      <option value="jewelery">Jewellery</option>
+      <option value="electronics">Electronics</option>
+    </select>
+    <select name="select" id="price">
+      <option value="">Sort</option>
+      <option value="Relevence">Relevence</option>
+      <option value="lth">LTH</option>
+      <option value="htl">HTL</option>
+    </select>
+    <!-- <input type="text" id="search" placeholder="Search products"> -->
+  </div>
+  <div class="container"></div>
+
+  <script>
+    let arr = [];
+    async function getapi() {
+      try {
+        let res = await axios.get("https://fakestoreapi.com/products");
+        arr = res.data;
+        showdata(arr);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getapi();
+
+    function showdata(data) {
+      let container = document.querySelector(".container");
+      container.innerHTML = '';
+      data.map((item, i) => {
+        let div = document.createElement("div");
+        div.classList.add("card");
+        let title = document.createElement("h4");
+        title.innerHTML = item.title;
+        let price = document.createElement("h5");
+        price.innerHTML = item.price;
+        let desc = document.createElement("h6");
+        title.innerHTML = item.desription;
+        let image = document.createElement("img");
+        image.src = item.image;
+        title.innerHTML = item.title;
+        let category = document.createElement("h3");
+        category.innerHTML = item.category;
+
+        let btn = document.createElement('button');
+btn.classList.add('btn'); // Add a class instead of an ID
+btn.innerText = 'Add to Cart';
+btn.addEventListener('click', () => addToCart(item, btn)); // Pass the button element to addToCart
+div.append(image, price, category, title, desc, btn);
+container.append(div);
+
+
+
+
+
+
+
+
+
+        // let btn = document.createElement('button');
+        // btn.id = 'btn'
+        // btn.innerText = 'Add to Cart'
+
+        // btn.addEventListener('click', () => addToCart(item)
+        // )
+        // div.append(image, price, category, title, desc, btn);
+        // container.append(div);
+      });
+    }
+
+    // <________________FilterValue_________________>
+
+    let filterdata = document.querySelector('#filter')
+    filterdata.addEventListener('change', filter)
+
+    function filter() {
+      let filtervalue = filterdata.value;
+      if (filtervalue === "") {
+        showdata(arr)
+      }
+      else {
+        newfiltervalue = arr.filter(item => item.category === filtervalue)
+        showdata(newfiltervalue);
+      }
+    }
+
+    // <________________SortValue_________________>
+
+    let sortdata = document.querySelector('#price')
+    sortdata.addEventListener('change', sort)
+
+    function sort() {
+      let newsort = [...arr]
+      let sortvalue = sortdata.value;
+      if (sortvalue === '') {
+        showdata(newsort)
+      }
+      if (sortvalue === 'htl') {
+        newsort.sort((a, b) => a.price - b.price)
+        showdata(newsort)
+      }
+      else if (sortvalue === 'lth') {
+        newsort.sort((a, b) => b.price - a.price)
+        showdata(newsort)
+      }
+      else {
+        showdata(newsort)
+      }
+    }
+
+
+    // <________________SearchValue_________________>
+
+    let search = document.querySelector('#search');
+
+    search.addEventListener('input', (e) => {
+      let searchvalue = e.target.value
+      let newsearchData = arr.filter(item => item.title.toLowerCase().includes(searchvalue))
+      showdata(newsearchData)
+    });
+
+    // <________________Set value in Localstorage_________________>
+
+    // function addToCart(item) {
+    //   let cartspan = document.querySelector('#cartspan')
+    //   let cart = JSON.parse(localStorage.getItem('shopdata')) || [];
+    //   cart.push(item);
+    //   localStorage.setItem('shopdata', JSON.stringify(cart));
+    //   cartspan.innerText = cart.length;
+    //   let btn = document.querySelector('#btn');
+    //   btn.innerText = 'Go to Cart'
+    // }
+
+    function addToCart(item, btn) {
+  let cartspan = document.querySelector('#cartspan');
+  let cart = JSON.parse(localStorage.getItem('shopdata')) || [];
+  cart.push(item);
+  localStorage.setItem('shopdata', JSON.stringify(cart));
+  cartspan.innerText = cart.length;
+  btn.innerText = 'Go to Cart'; // Change only the clicked button's text
+  btn.disabled = true;
+  
+}
+
+function updateCartValue() {
+  let cartspan = document.querySelector('#cartspan');
+  let cart = JSON.parse(localStorage.getItem('shopdata')) || [];
+  cartspan.innerText = cart.length;
+}
+
+// Call the updateCartValue function when the page loads
+window.onload = function() {
+  updateCartValue();
+};
+
+    // window.onload = function () {
+    //   cartspan.innerText = cart.length; 
+    // };
+
+    
+
+
+  </script>
+</body>
+
+</html>

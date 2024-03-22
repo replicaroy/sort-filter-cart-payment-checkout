@@ -1,0 +1,179 @@
+.header {
+    background-color: #2874f0;
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navbar ul li a {
+    color: white;
+    display: block;
+    padding: 0px 20px;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+  }
+  .navbar ul li a span {
+    color: #ffffff;
+    font-size: 18px;
+  }
+    .address {
+        width: 50%;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        margin: auto;
+        padding: 20px;
+        margin-top: 150px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .place-order {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 50%;
+        border-bottom: 1px solid rgb(207, 204, 204);
+        border-left: 1px solid rgb(207, 204, 204);
+        border-right: 1px solid rgb(207, 204, 204);
+        box-shadow: rgba(14, 14, 14, 0.2) 0px 2px 8px 0px;
+        margin: auto;
+        /* text-align: right; */
+        padding: 20px;
+        margin-bottom: 200px;
+    }
+
+    .place-order  h3{
+      padding-left: 100px;
+      color: rgb(71, 71, 71);
+    }
+    .address p:nth-child(2){
+        margin-top: 10px; font-size: 15px; color: rgb(107, 107, 107)  ;
+    }
+
+    .change{
+        border: 1px solid rgb(216, 216, 216); padding: 10px 10px;
+        color: rgb(90, 89, 89); border-radius: 3px; 
+    }
+    .order-btn {
+        background-color: #F6651C;
+        color: white;
+        padding: 20px 100px;
+        border: none;
+        font-weight: 500;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    .cartpage {
+        width: 50%;
+        height: 100%;
+        margin: auto;
+        display: grid;
+        place-items: center;
+        border-top: 1px solid rgb(207, 204, 204);
+        border-left: 1px solid rgb(207, 204, 204);
+        border-right: 1px solid rgb(207, 204, 204);
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    }
+
+    .itemdiv {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        align-items: center;
+        gap: 20px;
+        border-bottom: 1px solid rgb(215, 212, 212);
+        height: 100px;
+    }
+
+    .maindiv {
+        display: flex;
+        align-items: center;
+        gap: 100px;
+        width: 400px;
+    }
+
+    .item-desc {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .item-desc h5 {
+        color: rgb(97, 96, 96);
+        font-weight: 500;
+    }
+
+    .item-desc h4 {
+        color: rgb(76, 76, 76);
+        font-weight: 600;
+    }
+
+    .cart-value {
+        display: flex;
+        justify-content: flex-end;
+        gap: 5px;
+        padding: 20px;
+    }
+
+    .cart-value h4 {
+        /* border: 1px solid rgb(241, 239, 239); */
+        padding: 10px;
+        width: 40px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .cart-value h4:nth-child(2) {
+        border: 1px solid rgb(215, 212, 212);
+        padding: 10px 5px;
+        width: 40px;
+        text-align: center;
+        font-weight: 100;
+        cursor: auto;
+        border-radius: 5px;
+    }
+
+    .imagediv {
+        width: 70px;
+        height: 70px;
+    }
+
+    .imagediv img {
+        margin-left:  20px;
+        display: inline-block;
+        width: 100%;
+        aspect-ratio: 1;
+    }
+
+    .less,
+    .plus {
+        padding: 0 10px;
+        color: rgb(78, 77, 77);
+        background-color: rgb(246, 246, 243);
+        font-size: 20px;
+        border: none;
+        border-radius: 5px;
+
+
+    }
+    .less
+     {
+        padding: 0 17px;
+        color: rgb(98, 97, 97);
+        background-color: rgb(246, 246, 243);
+        font-size: 20px;
+        outline: none;
+        border: none;
+    }
+    .remove{
+        background-color: #F6651C;
+        width: 70px;
+        text-align: center;
+        padding: 5px 0;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+    }

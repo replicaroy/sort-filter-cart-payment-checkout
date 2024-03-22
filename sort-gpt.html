@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sorting</title>
+  </head>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <body>
+    <style>
+      .section {
+        width: 50%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+      }
+      select {
+        width: 350px;
+        padding: 10px;
+      }
+      .card {
+        padding: 20px;
+        border: 1px solid;
+      }
+      .card img {
+        display: inline-block;
+        max-width: 300px;
+        width: 230px;
+        aspect-ratio: 1;
+      }
+      .container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+      }
+    </style>
+
+    <div class="section">
+      <select name="select" id="filter">
+        <option value="">Sort</option>
+        <option value="men's clothing">Men</option>
+        <option value="women's clothing">Women</option>
+        <option value="jewelery">Jewellery</option>
+        <option value="electronics">Electronics</option>
+      </select> 
+      <select name="select" id="price">
+        <option value="">Sort</option>
+        <option value="Relevence">Relevence</option>
+        <option value="lth">LTH</option>
+        <option value="htl">HTL</option>
+      </select>  
+    </div>
+    <div class="container"></div>
+
+    <script>
+      let arr = [];
+      async function getapi() {
+        try {
+          let res = await axios.get("https://fakestoreapi.com/products");
+          arr = res.data;
+          showdata(arr);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      getapi();
+
+      function showdata(data) {
+        let container = document.querySelector(".container");
+        container.innerHTML = '';
+        data.map((item) => {
+          let div = document.createElement("div");
+          div.classList.add("card");
+          let title = document.createElement("h4");
+          title.innerHTML = item.title;
+          let price = document.createElement("h5");
+          price.innerHTML = item.price;
+          let desc = document.createElement("h6");
+          desc.innerHTML = item.description; // Fix typo here (desription -> description)
+          let image = document.createElement("img");
+          image.src = item.image;
+          let category = document.createElement("h3");
+          category.innerHTML = item.category;
+          div.append(image, price, category, title, desc);
+          container.append(div);
+        });
+      }
+
+      let selectData = document.getElementById("filter");
+      selectData.addEventListener("change", filters);
+
+      function filters() {
+        let filterData = selectData.value;
+        console.log(filterData);
+        if (filterData === "") {
+          showdata(arr);
+        } else {
+          let newdata = arr.filter((item) =>  item.category === filterData );
+          showdata(newdata);
+        }
+      }
+
+      let selectprice = document.getElementById("price");
+      selectprice.addEventListener("change", sortprice);
+
+      function sortprice() {
+        let sortData = [...arr]; // Copying the array to avoid mutation
+        let sortValue = selectprice.value;
+        if (sortValue === "lth") {
+          sortData.sort((a, b) => a.price - b.price);
+        } else if (sortValue === "htl") {
+          sortData.sort((a, b) => b.price - a.price);
+        }
+        showdata(sortData);
+      }
+    </script>
+  </body>
+</html>
